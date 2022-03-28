@@ -1,0 +1,56 @@
+package setting
+
+// 负责 设置相关的数据结构定义
+
+import "time"
+
+type ServiceSettings struct {
+	RunMode      string
+	HttpPort     string
+	ReadTimeout  time.Duration
+	WriteTimeout time.Duration
+}
+
+type FileSettings struct {
+	Env         string
+	ServiceName string
+	LogSavePath string
+	LogFileName string
+	LogFileExt  string
+	Keyword     string
+}
+
+type DatabaseSettings struct {
+	DBType       string
+	Username     string
+	Password     string
+	Host         string
+	DBName       string
+	Charset      string
+	ParseTime    bool
+	MaxIdleConns int
+	MaxOpenConns int
+}
+
+type QywechatSettings struct {
+	CorpID  string
+	AgentID int32
+	Secret  string
+	ToUser  string
+	MsgType string
+}
+
+type EmailSettings struct {
+	Host string
+	Port string
+	From string
+	To   string
+}
+
+func (s *Setting) ReadSection(k string, v interface{}) error {
+	err := s.vp.UnmarshalKey(k, v)
+	if err != nil {
+		return err
+	}
+	return nil
+}
