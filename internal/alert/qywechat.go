@@ -69,7 +69,7 @@ func getAccessToken() (interface{}, error) {
 }
 
 //getQywechatAlertInfo  企业微信通知消息具体内容
-func getQywechatAlertInfo(l *model.CountInfo) *QywechatAlertInfo {
+func getQywechatAlertInfo(l *model.LogInfo) *QywechatAlertInfo {
 	return &QywechatAlertInfo{
 		Title:   fmt.Sprintf("%s 环境 %s 的日志报警", l.Env, l.ServiceName),
 		Content: fmt.Sprintf("Time: %s \n ERROR INFO:\n %s\n", l.Timestamp, l.LogInfo),
@@ -115,7 +115,7 @@ func getPostBody(info *QywechatInfo, alertinfo *QywechatAlertInfo) *map[string]i
 	return nil
 }
 
-func QywechatAlert(l *model.CountInfo) (map[string]interface{}, error) {
+func QywechatAlert(l *model.LogInfo) (map[string]interface{}, error) {
 
 	//绑定企业微信参数设置
 	qywechatInfo := bindQywechatInfo(global.QywechatSetting)

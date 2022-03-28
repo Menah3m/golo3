@@ -10,7 +10,7 @@ import (
   -- Mysql
 */
 
-//WriteRecord
+//WriteLogInfo
 func WriteLogInfo(db *gorm.DB, info *model.LogInfo) error {
 	err := db.LogMode(false).Error
 	if err != nil {
@@ -21,22 +21,6 @@ func WriteLogInfo(db *gorm.DB, info *model.LogInfo) error {
 		return err
 	}
 	err = db.Create(info).Error
-	if err != nil {
-		return err
-	}
-	return nil
-}
-
-func WriteCountInfo(db *gorm.DB, countInfo *model.CountInfo) error {
-	err := db.LogMode(false).Error
-	if err != nil {
-		return err
-	}
-	err = db.AutoMigrate(&model.CountInfo{}).Error
-	if err != nil {
-		return err
-	}
-	err = db.Create(countInfo).Error
 	if err != nil {
 		return err
 	}
