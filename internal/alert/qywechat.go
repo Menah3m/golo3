@@ -69,10 +69,10 @@ func getAccessToken() (interface{}, error) {
 }
 
 //getQywechatAlertInfo  企业微信通知消息具体内容
-func getQywechatAlertInfo(l *model.LogInfo, c int32) *QywechatAlertInfo {
+func getQywechatAlertInfo(l *model.LogInfo, c int) *QywechatAlertInfo {
 	return &QywechatAlertInfo{
 		Title:   fmt.Sprintf("%s 环境 %s 的日志报警", l.Env, l.ServiceName),
-		Content: fmt.Sprintf("Time: %s \n Level:%s \n  ERROR INFO:\n %s\n 最近5分钟内出现了%v次", l.StartAt, l.LogLevel, l.LogInfo, c),
+		Content: fmt.Sprintf("Time: %s \nLevel:%s \nINFO:\n %s\n最近%.0f分钟内出现了%v次", l.StartAt, l.LogLevel, l.LogInfo, global.AppSetting.Duration.Minutes(), c),
 	}
 }
 
@@ -98,8 +98,8 @@ func getPostBody(info *QywechatInfo, alertinfo *QywechatAlertInfo) *map[string]i
 			"textcard": map[string]interface{}{
 				"title":       alertinfo.Title,
 				"description": alertinfo.Content,
-				"url":         "www.baidu.com",
-				"btntext":     "跳转到百度",
+				"url":         "http://192.168.108.206:32567/dashboard",
+				"btntext":     "跳转到Kuboard",
 			},
 		}
 	case "markdown":
@@ -115,7 +115,7 @@ func getPostBody(info *QywechatInfo, alertinfo *QywechatAlertInfo) *map[string]i
 	return nil
 }
 
-func QywechatAlert(l *model.LogInfo, c int32) (map[string]interface{}, error) {
+func QywechatAlert(l *model.LogInfo, c int) (map[string]interface{}, error) {
 
 	//绑定企业微信参数设置
 	qywechatInfo := bindQywechatInfo(global.QywechatSetting)

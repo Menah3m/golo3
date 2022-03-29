@@ -7,7 +7,7 @@ import (
 )
 
 var (
-	ServerSetting   *setting.ServiceSettings
+	AppSetting      *setting.AppSettings
 	FileSetting     *setting.FileSettings
 	DatabaseSetting *setting.DatabaseSettings
 	QywechatSetting *setting.QywechatSettings

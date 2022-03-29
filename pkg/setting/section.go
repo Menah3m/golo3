@@ -4,11 +4,10 @@ package setting
 
 import "time"
 
-type ServiceSettings struct {
-	RunMode      string
-	HttpPort     string
-	ReadTimeout  time.Duration
-	WriteTimeout time.Duration
+type AppSettings struct {
+	RunMode   string
+	Duration  time.Duration
+	Threshold int
 }
 
 type FileSettings struct {
@@ -48,7 +47,7 @@ type EmailSettings struct {
 }
 
 func (s *Setting) ReadSection(k string, v interface{}) error {
-	err := s.vp.UnmarshalKey(k, v)
+	err := s.Vp.UnmarshalKey(k, v)
 	if err != nil {
 		return err
 	}

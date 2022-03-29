@@ -5,7 +5,6 @@ package parse
 */
 
 import (
-	"fmt"
 	"github.com/hpcloud/tail"
 	"golo3/global"
 	"golo3/internal/alert"
@@ -43,7 +42,7 @@ func getLogfilePath() string {
 //ReadLine 按行读取日志文件内容
 func ReadLine() error {
 	fp := getLogfilePath()
-	fmt.Println(fp)
+
 	t, err := tail.TailFile(fp, tail.Config{
 		Follow: true,
 	})
@@ -54,6 +53,7 @@ func ReadLine() error {
 
 	// 监听
 	for line := range t.Lines {
+
 		logInfo := &model.LogInfo{}
 		now := time.Now()
 		formatNow := now.Format("2006-01-02 15:04:05")
@@ -75,15 +75,14 @@ func ReadLine() error {
 				return err
 			}
 
-			var c int32
-			var duration time.Duration = 5
-			d := duration * time.Minute
-			start := time.Now().Add(-d).Format("2006-01-02 15:04:05")
+			var c int
+			start := time.Now().Add(-global.AppSetting.Duration).Format("2006-01-02 15:04:05")
 			end := time.Now().Format("2006-01-02 15:04:05")
+
 			//统计次数
 			c = process.Count(global.DBEngine, logInfo.LogKeyword, start, end)
 
-			if c > 170 {
+			if c > global.AppSetting.Threshold {
 
 				// 发送通知
 				_, err = alert.QywechatAlert(logInfo, c)

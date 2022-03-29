@@ -33,7 +33,7 @@ func NewDBEngine(databaseSetting *setting.DatabaseSettings) (*gorm.DB, error) {
 	if err != nil {
 		return nil, err
 	}
-	if global.ServerSetting.RunMode == "debug" {
+	if global.AppSetting.RunMode == "debug" {
 		db.LogMode(true)
 	}
 	db.SingularTable(true)
