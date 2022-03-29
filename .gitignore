@@ -1,4 +1,4 @@
-configs/*
+configs/*.yaml
 .idea/*
 file/*
 golo3
